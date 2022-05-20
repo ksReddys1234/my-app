@@ -1,0 +1,227 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<modelVersion>4.0.0</modelVersion>
+<groupId>com.aitrich.learnware</groupId>
+<artifactId>Learnware</artifactId>
+<version>1.0-SNAPSHOT</version>
+<packaging>pom</packaging>
+    <name>Learnware Cloud Application - Master</name>
+<description>This is parent pom for Learnware Cloud Application, where all the generic configurations are defined.</description>
+
+<modules>
+    <module>LearnwareWeb</module>
+    <module>LearnwareModel</module>
+    <module>LearnwareServices</module>
+</modules>
+<organization>
+    <name>Aitrich Technologies</name>
+    <url>http://www.aitrich.com</url>
+</organization>
+
+<developers>
+    <developer>
+        <id>1</id>
+        <name>Shaheer</name>
+        <roles>
+            <role>Technical Leader</role>
+            <role>Developer</role>
+        </roles>
+    </developer>
+    <developer>
+        <id>2</id>
+        <name>Shinas</name>
+        <roles>
+            <role>Team Leader</role>
+            <role>Developer</role>
+        </roles>
+    </developer>
+    <developer>
+        <id>3</id>
+        <name>Prasanth AR</name>
+        <roles>
+            <role>Developer</role>
+        </roles>
+    </developer>
+    <developer>
+        <id>4</id>
+        <name>Jijesh VU</name>
+        <roles>
+            <role>Developer</role>
+        </roles>
+    </developer>
+</developers>
+
+<properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <javaee6.web.spec.version>2.0.0.Final</javaee6.web.spec.version>
+    <spring.version>3.1.2.RELEASE</spring.version>
+    <hibernate.version>4.1.1.Final</hibernate.version>
+    <junit.version>4.11</junit.version>
+    <java-version>1.7</java-version>
+    <jboss.as.maven.plugin.version>7.4.Final</jboss.as.maven.plugin.version>
+</properties>
+
+<repositories>
+    <repository>
+        <id>springsource-repo</id>
+        <name>SpringSource Repository</name>
+        <url>http://repo.springsource.org/release</url>
+    </repository>
+    <repository>
+        <id>jboss-releases-repository</id>
+        <name>JBoss Releases Repository</name>
+        <url>
+            https://repository.jboss.org/nexus/content/repositories/releases/
+        </url>
+    </repository>
+</repositories>
+
+<pluginRepositories>
+    <pluginRepository>
+        <id>jboss-public-repository-group</id>
+        <name>JBoss Public Maven Repository Group</name>
+        <url>https://repository.jboss.org/nexus/content/groups/public-jboss/</url>
+        <layout>default</layout>
+        <releases>
+            <enabled>true</enabled>
+            <updatePolicy>never</updatePolicy>
+        </releases>
+        <snapshots>
+            <enabled>true</enabled>
+            <updatePolicy>never</updatePolicy>
+        </snapshots>
+    </pluginRepository>
+    <pluginRepository>
+        <id>scala-tools.org</id>
+        <name>Scala-Tools Maven2 Repository</name>
+        <url>http://scala-tools.org/repo-releases</url>
+    </pluginRepository>
+</pluginRepositories>
+
+<dependencyManagement>
+    <dependencies>
+
+        <dependency>
+            <groupId>com.aitrich.learnware</groupId>
+            <artifactId>LearnwareModel</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <type>jar</type>
+        </dependency>
+
+        <dependency>
+            <groupId>com.aitrich.learnware</groupId>
+            <artifactId>LearnwareServices</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <type>jar</type>
+        </dependency>
+
+        <dependency>
+            <groupId>com.aitrich.learnware</groupId>
+            <artifactId>LearnwareWeb</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <type>war</type>
+            <scope>compile</scope>
+        </dependency>
+
+        <!-- JBoss distributes a complete set of Java EE 6 APIs including a Bill 
+            of Materials (BOM). A BOM specifies the versions of a "stack" (or a collection) 
+            of artifacts. We use this here so that we always get the correct versions 
+            of artifacts. Here we use the jboss-javaee-web-6.0 stack (you can read this 
+            as the JBoss stack of the Java EE Web Profile 6 APIs) -->
+        <dependency>
+            <groupId>org.jboss.spec</groupId>
+            <artifactId>jboss-javaee-web-6.0</artifactId>
+            <version>${javaee6.web.spec.version}</version>
+            <type>pom</type>
+            <scope>import</scope>
+        </dependency>
+
+        <!-- JSR-303 (Bean Validation) Implementation -->
+        <!-- Provides portable constraints such as @Email -->
+        <!-- Hibernate Validator is shipped in JBoss AS 7 -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>4.2.0.Final</version>
+            <scope>provided</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-api</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <!-- Test dependencies -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>${spring.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+            <type>jar</type>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.easymock</groupId>
+            <artifactId>easymock</artifactId>
+            <version>3.1</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+            <version>2.1</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>com.lowagie</groupId>
+            <artifactId>itext</artifactId>
+            <version>2.1.7</version>
+        </dependency>
+
+    </dependencies>
+</dependencyManagement>
+
+<build>
+<directory>${project.basedir}/target</directory> 
+    <pluginManagement>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>${java-version}</source>
+                    <target>${java-version}</target>
+                </configuration>
+            </plugin>
+            <!--Plugin for JBossAs7 -->
+            <plugin>
+                <groupId>org.jboss.as.plugins</groupId>
+                <artifactId>jboss-as-maven-plugin</artifactId>
+                <version>${jboss.as.maven.plugin.version}</version>
+                <inherited>true</inherited>
+                <configuration>
+                    <hostname>localhost</hostname>
+                    <port>8080</port>
+                    <filename>${project.build.finalName}.war</filename>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>deploy</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </pluginManagement>
+</build>
